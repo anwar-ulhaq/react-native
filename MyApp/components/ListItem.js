@@ -36,19 +36,17 @@ const ListItem = (props) => {
             setModalVisible(!modalVisible);
           }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Image
-                style={styles.touchableImage}
-                source={{uri: props.singleMedia.filename}}
-              />
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.textStyle}>Hide</Text>
-              </Pressable>
-            </View>
+          <View style={styles.modalView}>
+            <Image
+              style={styles.modalImage}
+              source={{uri: props.singleMedia.filename}}
+            />
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Hide</Text>
+            </Pressable>
           </View>
         </Modal>
       </View>
@@ -80,16 +78,17 @@ const styles = StyleSheet.create({
   textDescription: {},
   centeredView: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
   },
   modalView: {
     margin: 20,
+    marginTop: 200,
     backgroundColor: 'white',
     borderRadius: 20,
     //padding: 35,
-    //alignItems: "center",
+    alignItems: "stretch",
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -99,8 +98,15 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  modalImage: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 30,
+    height: 300,
+  },
   button: {
-    borderRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
     padding: 10,
     elevation: 2,
   },
