@@ -1,11 +1,15 @@
 import {StatusBar} from 'react-native';
+
 import Navigator from './navigators/Navigator';
+import {MainProvider} from './contexts/MainContext';
 
 const App = () => {
   return (
     <>
-      <Navigator></Navigator>
-      <StatusBar style="auto"/>
+      <MainProvider>
+        <Navigator/>
+        <StatusBar style="auto"/>
+      </MainProvider>
     </>
   );
 };
