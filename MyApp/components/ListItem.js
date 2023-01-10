@@ -20,7 +20,12 @@ const ListItem = (props) => {
         onPress={() => setModalVisible(true)}>
         <Image
           style={styles.touchableImage}
-          source={{uri: props.singleMedia.thumbnails.w160}}
+          source={props.singleMedia.thumbnails !== undefined ?
+            {
+              uri: 'https://media.mw.metropolia.fi/wbma/uploads/' +
+                props.singleMedia.thumbnails.w160,
+            } :
+            undefined}
         />
         <View style={styles.touchableText}>
           <Text style={styles.textTitle}>{props.singleMedia.title}</Text>
@@ -39,7 +44,10 @@ const ListItem = (props) => {
           <View style={styles.modalView}>
             <Image
               style={styles.modalImage}
-              source={{uri: props.singleMedia.filename}}
+              source={{
+                uri: 'https://media.mw.metropolia.fi/wbma/uploads/' +
+                  props.singleMedia.filename,
+              }}
             />
             <Pressable
               style={[styles.button, styles.buttonClose]}
@@ -88,7 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     //padding: 35,
-    alignItems: "stretch",
+    alignItems: 'stretch',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
