@@ -1,65 +1,33 @@
-import {
-  Image,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {PropTypes} from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 
 const ListItem = (props) => {
-  const [modalVisible, setModalVisible] = useState(false);
 
-  return (
-    <>
-      <TouchableOpacity
-        style={styles.touchableOpacity}
-        onPress={() => setModalVisible(true)}>
-        <Image
-          style={styles.touchableImage}
-          source={props.singleMedia.thumbnails !== undefined ?
-            {
-              uri: 'https://media.mw.metropolia.fi/wbma/uploads/' +
-                props.singleMedia.thumbnails.w160,
-            } :
-            undefined}
-        />
-        <View style={styles.touchableText}>
-          <Text style={styles.textTitle}>{props.singleMedia.title}</Text>
-          <Text style={styles.textDescription}>{props.singleMedia.description}</Text>
-        </View>
-      </TouchableOpacity>
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.modalView}>
-            <Image
-              style={styles.modalImage}
-              source={{
-                uri: 'https://media.mw.metropolia.fi/wbma/uploads/' +
-                  props.singleMedia.filename,
-              }}
-            />
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Hide</Text>
-            </Pressable>
-          </View>
-        </Modal>
+  return (<>
+    <TouchableOpacity
+      style={styles.touchableOpacity}
+      onPress={() => {
+
+        props.navigation.navigate('Single', {
+          title: props.singleMedia.title,
+          filename: props.singleMedia.filename,
+        });
+      }}>
+      <Image
+        style={styles.touchableImage}
+        source={props.singleMedia.thumbnails !== undefined ? {
+          uri: 'https://media.mw.metropolia.fi/wbma/uploads/' +
+            props.singleMedia.thumbnails.w160,
+        } : undefined}
+      />
+      <View style={styles.touchableText}>
+        <Text style={styles.textTitle}>{props.singleMedia.title}</Text>
+        <Text
+          style={styles.textDescription}>{props.singleMedia.description}</Text>
       </View>
-    </>
-  );
+    </TouchableOpacity>
+  </>);
 };
 
 const styles = StyleSheet.create({
@@ -84,60 +52,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   textDescription: {},
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    marginTop: 200,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    //padding: 35,
-    alignItems: 'stretch',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalImage: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 30,
-    height: 300,
-  },
-  button: {
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  thumbnailImage: {},
 });
 
 ListItem.propTypes = {
   singleMedia: PropTypes.object,
+  navigation: PropTypes.object,
 };
 
 export default ListItem;
