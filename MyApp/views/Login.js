@@ -1,19 +1,35 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import PropTypes from 'prop-types';
 
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useLogin, useUser} from '../hooks/ApiHooks';
+import LoginForm from '../components/LoginForm';
+import RegisterForm from '../components/RegisterForm';
 
 const Login = ({navigation}) => {
 
-  const [isLoggedIn, setIsLoggedIn] = React.useContext(MainContext);
+  const {isLoggedIn, setIsLoggedIn, setUser} = useContext(MainContext);
+
 
   const logIn = async () => {
 
-    setIsLoggedIn(true);
+    const data = {username: 'anwar-ulhaq', password: 'anwar-ulhaq-changed'};
+
+    const {postLogin} = useLogin();
+
+    const logData = await postLogin(data).then(loginData => {
+      return loginData
+    });
+
     try {
-      await AsyncStorage.setItem('userToken', 'abc');
+      if (logData.token === null || logData.token === undefined){
+        console.log('Login error');
+        throw new Error("Login error");
+      }
+      await AsyncStorage.setItem('userToken', logData.token);
+      setIsLoggedIn(true);
     } catch (error) {
       console.log('Login error: ' + error);
     }
@@ -24,9 +40,19 @@ const Login = ({navigation}) => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
 
-      if (userToken === 'abc') {
-        setIsLoggedIn(true);
+      const {getUserByToken} = useUser();
+
+      const user = await getUserByToken(userToken);
+
+      setUser(user);
+
+      if (userToken === null || userToken === undefined) {
+        console.log('Login error');
+        throw new Error("Login error");
       }
+
+      setIsLoggedIn(true);
+
     } catch (error) {
       console.log('Error at token check: ' + error);
     }
@@ -39,7 +65,8 @@ const Login = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text>Login</Text>
-      <Button title="Sign in!" onPress={logIn}/>
+      <LoginForm/>
+      <RegisterForm/>
     </View>
   );
 };
