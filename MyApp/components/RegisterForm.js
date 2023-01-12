@@ -1,140 +1,114 @@
 import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {View} from 'react-native';
 
 import {useUser} from '../hooks/ApiHooks';
+import {Button, Input, Text} from '@rneui/base';
 
 const RegisterForm = () => {
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
       username: '',
       password: '',
       email: '',
-      full_name: ''
-    }
+      full_name: '',
+    },
   });
 
   const onSubmit = async (data) => {
     const {postUser} = useUser();
     const newUser = await postUser(data).then(newUser => newUser);
     console.log(newUser);
-  }
+  };
 
   return (
-    <View >
-      <Text style={styles.label}>Username</Text>
+    <View>
+      <Text h4
+            h4Style={{fontWeight: '200', textAlign: 'center'}}>Register</Text>
       <Controller
         control={control}
         rules={{
           required: true,
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
+        render={({field: {onChange, onBlur, value}}) => (
+          <Input
+            placeholder="username"
+            value={value}
             onBlur={onBlur}
             onChangeText={onChange}
-            value={value}
             autoCapitalize={'none'}
-            placeholder='Enter username'
+            errorStyle={{color: 'red'}}
+            errorMessage={errors.username && 'This field is required'}
           />
         )}
-        name='username'
+        name="username"
       />
-      {errors.username && <Text>This is required.</Text>}
 
-      <Text style={styles.label}>Password</Text>
       <Controller
         control={control}
         rules={{
           required: true,
           maxLength: 100,
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
+        render={({field: {onChange, onBlur, value}}) => (
+          <Input
+            placeholder="password"
+            value={value}
             onBlur={onBlur}
             onChangeText={onChange}
-            value={value}
+            errorStyle={{color: 'red'}}
             autoCapitalize={'none'}
             secureTextEntry={true}
             autoComplete={'password'}
-            placeholder='Enter password'
+            errorMessage={errors.password && 'This field is required'}
           />
         )}
-        name='password'
+        name="password"
       />
 
-      <Text style={styles.label}>E-mail</Text>
       <Controller
         control={control}
         rules={{
           required: true,
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
+        render={({field: {onChange, onBlur, value}}) => (
+          <Input
+            placeholder="email"
+            value={value}
             onBlur={onBlur}
             onChangeText={onChange}
-            value={value}
             autoCapitalize={'none'}
-            placeholder='Enter email address'
+            errorStyle={{color: 'red'}}
+            errorMessage={errors.email && 'This field is required'}
           />
         )}
-        name='email'
+        name="email"
       />
-      {errors.email && <Text>This is required.</Text>}
 
-      <Text style={styles.label}>Full name</Text>
       <Controller
         control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
+        render={({field: {onChange, onBlur, value}}) => (
+          <Input
+            placeholder="Enter full name"
+            value={value}
             onBlur={onBlur}
             onChangeText={onChange}
-            value={value}
-            autoCapitalize={'none'}
-            placeholder='Enter full name'
           />
         )}
-        name='full_name'
+        name="full_name"
       />
-      {errors.full_name && <Text></Text>}
 
-      <Button style={styles.button} title="Register" onPress={handleSubmit(onSubmit)} />
+      <Button
+        title="Register"
+        buttonStyle={{
+          backgroundColor: 'rgba(78, 116, 289, 1)',
+          borderRadius: 3,
+        }}
+        onPress={handleSubmit(onSubmit)}
+      />
     </View>
   );
-}
-
-
-const styles = StyleSheet.create({
-  label: {
-    color: 'white',
-    margin: 20,
-    marginLeft: 0,
-  },
-  button: {
-    marginTop: 40,
-    color: 'white',
-    height: 40,
-    backgroundColor: '#ec5990',
-    borderRadius: 4,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    paddingTop: 24,
-    padding: 8,
-    backgroundColor: '#0e101c',
-  },
-  input: {
-    backgroundColor: 'white',
-    borderColor: '#0e101c',
-    height: 40,
-    padding: 10,
-    borderRadius: 4,
-  },
-});
+};
 
 export default RegisterForm;

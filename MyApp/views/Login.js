@@ -1,11 +1,10 @@
 import React, {useContext, useEffect} from 'react';
 import {
-  Button,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  Text, TouchableOpacity,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -19,7 +18,6 @@ import RegisterForm from '../components/RegisterForm';
 const Login = ({navigation}) => {
 
   const {isLoggedIn, setIsLoggedIn, setUser} = useContext(MainContext);
-
 
   const logIn = async () => {
 
@@ -72,13 +70,14 @@ const Login = ({navigation}) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <TouchableOpacity onPress={Keyboard.dismiss} style={{flex: 1}}
-                        activeOpacity={1}>
-        <View style={styles.container}>
-          <Text>Login</Text>
+      <TouchableOpacity
+        onPress={Keyboard.dismiss}
+        style={{flex: 1}}
+        activeOpacity={1}>
+        <View>
           <LoginForm/>
           <RegisterForm/>
         </View>
@@ -90,9 +89,10 @@ const Login = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 24,
+    padding: 8,
+    backgroundColor: '#FFFFFF',
   },
 });
 
