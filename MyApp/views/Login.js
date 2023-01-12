@@ -1,5 +1,13 @@
 import React, {useContext, useEffect} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import PropTypes from 'prop-types';
 
 import {MainContext} from '../contexts/MainContext';
@@ -12,7 +20,6 @@ const Login = ({navigation}) => {
 
   const {isLoggedIn, setIsLoggedIn, setUser} = useContext(MainContext);
 
-
   const logIn = async () => {
 
     const data = {username: 'anwar-ulhaq', password: 'anwar-ulhaq-changed'};
@@ -20,13 +27,13 @@ const Login = ({navigation}) => {
     const {postLogin} = useLogin();
 
     const logData = await postLogin(data).then(loginData => {
-      return loginData
+      return loginData;
     });
 
     try {
-      if (logData.token === null || logData.token === undefined){
+      if (logData.token === null || logData.token === undefined) {
         console.log('Login error');
-        throw new Error("Login error");
+        throw new Error('Login error');
       }
       await AsyncStorage.setItem('userToken', logData.token);
       setIsLoggedIn(true);
@@ -48,7 +55,7 @@ const Login = ({navigation}) => {
 
       if (userToken === null || userToken === undefined) {
         console.log('Login error');
-        throw new Error("Login error");
+        throw new Error('Login error');
       }
 
       setIsLoggedIn(true);
@@ -63,11 +70,19 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Login</Text>
-      <LoginForm/>
-      <RegisterForm/>
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <TouchableOpacity onPress={Keyboard.dismiss} style={{flex: 1}}
+                        activeOpacity={1}>
+        <View style={styles.container}>
+          <Text>Login</Text>
+          <LoginForm/>
+          <RegisterForm/>
+        </View>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   );
 };
 
