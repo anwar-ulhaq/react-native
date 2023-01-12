@@ -5,6 +5,8 @@ const baseUrl = 'https://media.mw.metropolia.fi/wbma/';
 const mediaPath = 'media/';
 const logInPath = 'login/';
 const usersPath = 'users/';
+const tagPath = 'tags/';
+
 
 const useMedia = () => {
 
@@ -100,7 +102,16 @@ const useUser = () => {
     }
   };
 
-  return {getUserByToken, postUser};
+  const getUserAvatar = async (avatarName) => {
+    try {
+      return await fetch(baseUrl+tagPath+avatarName)
+      .then(tagResponse => tagResponse.json());
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {getUserByToken, postUser, getUserAvatar};
 };
 
 export {useMedia, useLogin, useUser};

@@ -1,5 +1,13 @@
 import React, {useContext, useEffect} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {
+  Button,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text, TouchableOpacity,
+  View,
+} from 'react-native';
 import PropTypes from 'prop-types';
 
 import {MainContext} from '../contexts/MainContext';
@@ -63,11 +71,19 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Login</Text>
-      <LoginForm/>
-      <RegisterForm/>
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableOpacity onPress={Keyboard.dismiss} style={{flex: 1}}
+                        activeOpacity={1}>
+        <View style={styles.container}>
+          <Text>Login</Text>
+          <LoginForm/>
+          <RegisterForm/>
+        </View>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   );
 };
 
