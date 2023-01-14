@@ -58,24 +58,31 @@ const styles = StyleSheet.create({
   touchableOpacity: {
     flexDirection: 'row',
     padding: 10,
-    backgroundColor: '#b6b6b6',
+    backgroundColor: '#262626',
     marginTop: 4,
     marginBottom: 4,
+    height: 160,
   },
   touchableImage: {
     flex: 1,
     padding: 30,
     flexWrap: 'wrap',
+    borderRadius: 8,
+    borderBottomLeftRadius: 48,
   },
   touchableText: {
     flex: 2,
-    padding: 10,
+    paddingLeft: 10,
   },
   textTitle: {
-    fontWeight: 'bold',
     fontSize: 16,
+    color: 'white',
   },
-  textDescription: {},
+  textDescription: {
+    paddingBottom: 10,
+    height: 120,
+    color: '#505050',
+  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -87,7 +94,6 @@ const styles = StyleSheet.create({
     marginTop: 200,
     backgroundColor: 'white',
     borderRadius: 20,
-    //padding: 35,
     alignItems: "stretch",
     shadowColor: '#000',
     shadowOffset: {
