@@ -33,7 +33,7 @@ const StackScreen = () => {
       </Stack.Navigator>
     ) : (
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="Welcome!" component={Login}/>
       </Stack.Navigator>
     )
   );

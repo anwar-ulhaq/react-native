@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -14,10 +14,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useLogin, useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import {Button} from '@rneui/base';
 
 const Login = ({navigation}) => {
 
   const {isLoggedIn, setIsLoggedIn, setUser} = useContext(MainContext);
+  const [toggleForm, setToggleForm] = useState(false);
 
   const logIn = async () => {
 
@@ -30,15 +32,19 @@ const Login = ({navigation}) => {
     });
 
     try {
-      if (logData.token === null || logData.token === undefined){
+      if (logData.token === null || logData.token === undefined) {
         console.log('Login error');
-        throw new Error("Login error");
+        throw new Error('Login error');
       }
       await AsyncStorage.setItem('userToken', logData.token);
       setIsLoggedIn(true);
     } catch (error) {
       console.log('Login error: ' + error);
     }
+  };
+
+  const toggleComponent = () => {
+    setToggleForm(!toggleForm);
   };
 
   const checkToken = async () => {
@@ -78,8 +84,16 @@ const Login = ({navigation}) => {
         style={{flex: 1}}
         activeOpacity={1}>
         <View>
-          <LoginForm/>
-          <RegisterForm/>
+          {toggleForm ? <LoginForm/> : <RegisterForm/>}
+
+          <Button
+            title={toggleForm ? 'Go to Register' : 'Go to Login'}
+            buttonStyle={{
+              marginTop: 8,
+              backgroundColor: 'rgba(78, 116, 289, 1)',
+              borderRadius: 3,
+            }}
+            onPress={toggleComponent}/>
         </View>
       </TouchableOpacity>
     </KeyboardAvoidingView>
