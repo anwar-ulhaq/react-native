@@ -74,9 +74,6 @@ const styles = StyleSheet.create({
     paddingLeft: 1,
     paddingRight: 1,
     paddingBottom: 15,
-    borderTopColor: "gray",
-    borderBottomColor: "gray",
-    borderWidth: 1,
   },
   heading: {
     flex:1,
@@ -85,8 +82,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 24,
     paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: "gray",
   },
   profileImage: {
     flex: 5,
@@ -94,8 +89,6 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap',
     alignItems: 'stretch',
     paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: "gray",
   },
   email: {
     flex:1,
@@ -103,8 +96,6 @@ const styles = StyleSheet.create({
     //fontWeight: "bold",
     fontSize: 16,
     paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: "gray",
   },
   fullName: {
     flex:1,
@@ -112,14 +103,10 @@ const styles = StyleSheet.create({
     //fontWeight: "bold",
     fontSize: 16,
     paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: "gray",
   },
   logoutButton: {
     flex:1,
     paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: "gray",
   }
 });
 
