@@ -8,6 +8,8 @@ import Login from '../views/Login';
 import Single from '../views/Single';
 import Profile from '../views/Profile';
 import {MainContext} from '../contexts/MainContext';
+import MaterialCommunityIcons
+  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -15,8 +17,24 @@ const Stack = createNativeStackNavigator();
 const TabScreen = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home}/>
-      <Tab.Screen name="Profile" component={Profile}/>
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="home" color={color} size={26}/>
+          ),
+        }}
+        name="Home"
+        component={Home}/>
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="account" color={color} size={26}/>
+          ),
+        }}
+        name="Profile"
+        component={Profile}/>
     </Tab.Navigator>
   );
 };
@@ -33,7 +51,7 @@ const StackScreen = () => {
       </Stack.Navigator>
     ) : (
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="Welcome!" component={Login}/>
       </Stack.Navigator>
     )
   );

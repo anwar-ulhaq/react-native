@@ -11,6 +11,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MainContext} from '../contexts/MainContext';
 import {useUser} from '../hooks/ApiHooks';
+import {Icon} from '@rneui/themed';
 
 const Profile = ({navigation}) => {
 
@@ -44,14 +45,23 @@ const Profile = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.outerContainer}>
-      <Text style={styles.heading}>Username: {user.username}</Text>
-      <Image
-        style={styles.profileImage}
-        source={{uri: avatar}}
-      />
-      <Text style={styles.email}>Email: {user.email}</Text>
-      <Text style={styles.fullName}>Full name: {user.fullName ? user.fullName : 'Not available'}</Text>
-      <Button style={styles.logoutButton} title={'Logout'} onPress={logout}/>
+        <View style={{flexDirection: 'row'}}>
+          <Icon
+            raised
+            name="user-circle"
+            type="font-awesome"
+          />
+          <Text style={styles.heading}>Username: {user.username}</Text>
+        </View>
+        <Image
+          style={styles.profileImage}
+          source={{uri: avatar}}
+        />
+        <Text style={styles.email}>Email: {user.email}</Text>
+        <Text style={styles.fullName}>Full name: {user.fullName ?
+          user.fullName :
+          'Not available'}</Text>
+        <Button style={styles.logoutButton} title={'Logout'} onPress={logout}/>
       </View>
     </SafeAreaView>
   );
@@ -74,19 +84,15 @@ const styles = StyleSheet.create({
     paddingLeft: 1,
     paddingRight: 1,
     paddingBottom: 15,
-    borderTopColor: "gray",
-    borderBottomColor: "gray",
-    borderWidth: 1,
   },
   heading: {
-    flex:1,
+    flex: 1,
     justifyContent: 'center',
     paddingTop: 10,
-    fontWeight: "bold",
+    marginTop: 8,
+    fontWeight: 'bold',
     fontSize: 24,
     paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: "gray",
   },
   profileImage: {
     flex: 5,
@@ -94,8 +100,6 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap',
     alignItems: 'stretch',
     paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: "gray",
   },
   email: {
     flex:1,
@@ -103,8 +107,6 @@ const styles = StyleSheet.create({
     //fontWeight: "bold",
     fontSize: 16,
     paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: "gray",
   },
   fullName: {
     flex:1,
@@ -112,14 +114,10 @@ const styles = StyleSheet.create({
     //fontWeight: "bold",
     fontSize: 16,
     paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: "gray",
   },
   logoutButton: {
     flex:1,
     paddingLeft: 5,
-    borderWidth: 1,
-    borderColor: "gray",
   }
 });
 
