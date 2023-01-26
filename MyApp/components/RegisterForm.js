@@ -1,9 +1,8 @@
 import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {View} from 'react-native';
 
 import {useUser} from '../hooks/ApiHooks';
-import {Button, Input, Text} from '@rneui/base';
+import {Button, Card, Input} from '@rneui/base';
 
 const RegisterForm = () => {
 
@@ -23,9 +22,11 @@ const RegisterForm = () => {
   };
 
   return (
-    <View>
-      <Text h4
-            h4Style={{fontWeight: '200', textAlign: 'center'}}>Register</Text>
+    <Card>
+      <Card.Title h4 h4Style={{
+        fontWeight: '200',
+        textAlign: 'center',
+      }}>Register</Card.Title>
       <Controller
         control={control}
         rules={{
@@ -107,7 +108,7 @@ const RegisterForm = () => {
         }}
         onPress={handleSubmit(onSubmit)}
       />
-    </View>
+    </Card>
   );
 };
 

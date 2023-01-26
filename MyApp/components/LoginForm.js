@@ -1,10 +1,9 @@
 import React, {useContext} from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Button, Input, Text} from '@rneui/themed';
-
+import {Button, Card, Input} from '@rneui/themed';
 import {useLogin} from '../hooks/ApiHooks';
+
 import {MainContext} from '../contexts/MainContext';
 
 const LoginForm = () => {
@@ -36,8 +35,11 @@ const LoginForm = () => {
   };
 
   return (
-    <View>
-      <Text h4 h4Style={{fontWeight: '200', textAlign: 'center'}}>Login</Text>
+    <Card>
+      <Card.Title h4 h4Style={{
+        fontWeight: '200',
+        textAlign: 'center',
+      }}>Login</Card.Title>
       <Controller
         control={control}
         rules={{
@@ -87,7 +89,7 @@ const LoginForm = () => {
         }}
         onPress={handleSubmit(onSubmit)}
       />
-    </View>
+    </Card>
   );
 };
 
