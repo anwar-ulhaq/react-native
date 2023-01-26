@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useLogin, useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
-import {Button} from '@rneui/base';
+import {Button, Card, Text} from '@rneui/themed';
 
 const Login = ({navigation}) => {
 
@@ -86,14 +86,22 @@ const Login = ({navigation}) => {
         <View>
           {toggleForm ? <LoginForm/> : <RegisterForm/>}
 
-          <Button
-            title={toggleForm ? 'Go to Register' : 'Go to Login'}
-            buttonStyle={{
-              marginTop: 8,
-              backgroundColor: 'rgba(78, 116, 289, 1)',
-              borderRadius: 3,
-            }}
-            onPress={toggleComponent}/>
+          <Card>
+            <Text>
+              {toggleForm
+                ? 'No account yet? Please register.'
+                : 'Already have an account? Please login.'}
+            </Text>
+
+            <Button
+              title={toggleForm ? 'Go to Register' : 'Go to Login'}
+              buttonStyle={{
+                marginTop: 8,
+                backgroundColor: 'rgba(78, 116, 289, 1)',
+                borderRadius: 3,
+              }}
+              onPress={toggleComponent}/>
+          </Card>
         </View>
       </TouchableOpacity>
     </KeyboardAvoidingView>

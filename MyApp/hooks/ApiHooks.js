@@ -7,7 +7,6 @@ const logInPath = 'login/';
 const usersPath = 'users/';
 const tagPath = 'tags/';
 
-
 const useMedia = () => {
 
   const [mediaArray, setMediaArray] = useState([]);
@@ -43,10 +42,10 @@ const useLogin = () => {
   const postLogin = async (userCredentials) => {
 
     const options = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Accept":"application/json",
-        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(userCredentials),
     };
@@ -85,11 +84,10 @@ const useUser = () => {
   const postUser = async (userData) => {
 
     const options = {
-
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Accept":"application/json",
-        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(userData),
     };
@@ -104,14 +102,24 @@ const useUser = () => {
 
   const getUserAvatar = async (avatarName) => {
     try {
-      return await fetch(baseUrl+tagPath+avatarName)
-      .then(tagResponse => tagResponse.json());
+      return await fetch(baseUrl + tagPath + avatarName).
+        then(tagResponse => tagResponse.json());
     } catch (error) {
       throw new Error(error.message);
     }
   };
 
-  return {getUserByToken, postUser, getUserAvatar};
+  const checkUsername = async (username) => {
+    try {
+      return await fetch(baseUrl + usersPath + 'username/' + username).
+        then(usernameResponse => usernameResponse.json(),
+        );
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {getUserByToken, postUser, getUserAvatar, checkUsername};
 };
 
 export {useMedia, useLogin, useUser};
