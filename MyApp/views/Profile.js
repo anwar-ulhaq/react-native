@@ -1,17 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Button,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Button, View} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MainContext} from '../contexts/MainContext';
 import {useUser} from '../hooks/ApiHooks';
-import {Icon} from '@rneui/themed';
+import {Card, Icon, ListItem} from '@rneui/themed';
 
 const Profile = ({navigation}) => {
 
@@ -43,82 +36,34 @@ const Profile = ({navigation}) => {
   }, [user.user_id]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.outerContainer}>
-        <View style={{flexDirection: 'row'}}>
-          <Icon
-            raised
-            name="user-circle"
-            type="font-awesome"
-          />
-          <Text style={styles.heading}>Username: {user.username}</Text>
-        </View>
-        <Image
-          style={styles.profileImage}
-          source={{uri: avatar}}
+    <Card>
+      <View style={{flexDirection: 'row'}}>
+        <Icon
+          raised
+          name="user-circle"
+          type="font-awesome"
         />
-        <Text style={styles.email}>Email: {user.email}</Text>
-        <Text style={styles.fullName}>Full name: {user.fullName ?
-          user.fullName :
-          'Not available'}</Text>
-        <Button style={styles.logoutButton} title={'Logout'} onPress={logout}/>
+        <Card.Title h4 h4Style={{
+          fontWeight: 'bold',
+          textAlign: 'center',
+          fontSize: 24,
+          paddingTop: 8,
+          marginTop: 8,
+          paddingLeft: 8,
+        }}>{user.username}</Card.Title>
       </View>
-    </SafeAreaView>
+      <Card.Image source={{uri: avatar}}/>
+      <ListItem>
+        <Icon name="email"/>
+        <ListItem.Title>Email: {user.email}</ListItem.Title>
+      </ListItem>
+      <ListItem>
+        <Icon name="badge"/>
+        <ListItem.Title>Full name: {user.full_name}</ListItem.Title>
+      </ListItem>
+      <Button title={'Logout'} onPress={logout}/>
+    </Card>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: '#fff',
-    paddingTop: 10,
-  },
-  outerContainer: {
-    flex: 9,
-    flexDirection: "column",
-    backgroundColor: '#fff',
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    paddingTop: 5,
-    paddingLeft: 1,
-    paddingRight: 1,
-    paddingBottom: 15,
-  },
-  heading: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: 10,
-    marginTop: 8,
-    fontWeight: 'bold',
-    fontSize: 24,
-    paddingLeft: 5,
-  },
-  profileImage: {
-    flex: 5,
-    padding: 30,
-    flexWrap: 'nowrap',
-    alignItems: 'stretch',
-    paddingLeft: 5,
-  },
-  email: {
-    flex: 1,
-    paddingTop: 10,
-    //fontWeight: "bold",
-    fontSize: 16,
-    paddingLeft: 5,
-  },
-  fullName: {
-    flex: 1,
-    paddingTop: 10,
-    //fontWeight: "bold",
-    fontSize: 16,
-    paddingLeft: 5,
-  },
-  logoutButton: {
-    flex:1,
-    paddingLeft: 5,
-  }
-});
 
 export default Profile;
