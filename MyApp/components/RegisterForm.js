@@ -39,7 +39,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <Card>
+    <Card containerStyle={{borderRadius: 8}}>
       <Card.Title h4 h4Style={{
         fontWeight: '200',
         textAlign: 'center',

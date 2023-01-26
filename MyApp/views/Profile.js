@@ -36,7 +36,7 @@ const Profile = ({navigation}) => {
   }, [user.user_id]);
 
   return (
-    <Card>
+    <Card containerStyle={{borderRadius: 8}}>
       <View style={{flexDirection: 'row'}}>
         <Icon
           raised
@@ -52,7 +52,7 @@ const Profile = ({navigation}) => {
           paddingLeft: 8,
         }}>{user.username}</Card.Title>
       </View>
-      <Card.Image source={{uri: avatar}}/>
+      <Card.Image source={{uri: avatar}} containerStyle={{borderRadius: 8}}/>
       <ListItem>
         <Icon name="email"/>
         <ListItem.Title>Email: {user.email}</ListItem.Title>
