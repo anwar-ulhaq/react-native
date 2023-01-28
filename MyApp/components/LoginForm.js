@@ -3,12 +3,12 @@ import {Controller, useForm} from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, Card, Input} from '@rneui/themed';
 
-import {useLogin} from '../hooks/ApiHooks';
+import {useLogin, useUser} from '../hooks/ApiHooks';
 import {MainContext} from '../contexts/MainContext';
 
 const LoginForm = () => {
 
-  const {isLoggedIn, setIsLoggedIn} = useContext(MainContext);
+  const {setIsLoggedIn, setUser} = useContext(MainContext);
 
   const {control, handleSubmit, formState: {errors}} = useForm({
     defaultValues: {
@@ -17,21 +17,19 @@ const LoginForm = () => {
     },
   });
 
+  const {postLogin} = useLogin();
+  const {getUserByToken} = useUser();
+
   const onSubmit = async (data) => {
 
-    const {postLogin} = useLogin();
-    const loginData = await postLogin(data).then(loginData => loginData);
-
-    try {
-      if (loginData.token === null || loginData.token === undefined) {
-        throw new Error('Login error');
-      }
+    await postLogin(data).then(async loginData => {
       await AsyncStorage.setItem('userToken', loginData.token);
-      setIsLoggedIn(true);
 
-    } catch (error) {
-      console.log('Login error: ' + error);
-    }
+      await getUserByToken(loginData.token).then(user => {
+        setUser(user);
+        setIsLoggedIn(true);
+      });
+    });
   };
 
   return (
