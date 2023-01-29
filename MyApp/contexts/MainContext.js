@@ -6,9 +6,17 @@ const MainContext = React.createContext({});
 const MainProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
+  const [isEditProfile, setIsEditProfile] = useState(false);
 
   return (
-    <MainContext.Provider value={{isLoggedIn, setIsLoggedIn, user, setUser}}>
+    <MainContext.Provider value={{
+      isLoggedIn,
+      setIsLoggedIn,
+      user,
+      setUser,
+      isEditProfile,
+      setIsEditProfile,
+    }}>
       {props.children}
     </MainContext.Provider>
   );

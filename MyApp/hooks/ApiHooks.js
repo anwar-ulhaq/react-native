@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const baseUrl = 'https://media.mw.metropolia.fi/wbma/';
 
@@ -100,6 +101,36 @@ const useUser = () => {
     }
   };
 
+  const updateUser = async (newData) => {
+
+    console.log('Users new data: ' + JSON.stringify(newData));
+
+    const userToken = await AsyncStorage.getItem('userToken');
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-access-token': userToken,
+      },
+      body: JSON.stringify(newData),
+    };
+
+    try {
+      const response = await fetch(baseUrl + usersPath, options);
+      //.then(userUpdateResponse => userUpdateResponse.json());
+      console.log('user update response: ' + JSON.stringify(response));
+      if (response.ok) {
+        return await response.json();
+      } else {
+        throw new Error(await response.json().message);
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
   const getUserAvatar = async (avatarName) => {
     try {
       return await fetch(baseUrl + tagPath + avatarName).
@@ -119,7 +150,7 @@ const useUser = () => {
     }
   };
 
-  return {getUserByToken, postUser, getUserAvatar, checkUsername};
+  return {getUserByToken, postUser, getUserAvatar, checkUsername, updateUser};
 };
 
 export {useMedia, useLogin, useUser};

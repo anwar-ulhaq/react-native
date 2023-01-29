@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -12,14 +12,46 @@ import {Button, Card, Text} from '@rneui/themed';
 
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import {MainContext} from '../contexts/MainContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useUser} from '../hooks/ApiHooks';
 
 const Login = ({navigation}) => {
 
+  const {isLoggedIn, setIsLoggedIn, setUser} = useContext(MainContext);
+
   const [toggleForm, setToggleForm] = useState(true);
+
+  const {getUserByToken} = useUser();
 
   const toggleComponent = () => {
     setToggleForm(!toggleForm);
   };
+
+  const checkToken = async () => {
+
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+
+      if (userToken === null || userToken === undefined) {
+        console.log('Login error');
+        throw new Error('Login error');
+      }
+      const user = await getUserByToken(userToken);
+
+      setUser(user);
+
+      setIsLoggedIn(true);
+
+    } catch (error) {
+      console.log('Error at token check: ' + error);
+    }
+  };
+
+  useEffect(() => {
+    console.log('Login View -> isLoggedIn: ' + isLoggedIn);
+    checkToken();
+  }, []);
 
   return (
     <KeyboardAvoidingView
