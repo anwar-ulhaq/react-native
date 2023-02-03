@@ -7,6 +7,7 @@ const MainProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [isEditProfile, setIsEditProfile] = useState(false);
+  const [update, setUpdate] = useState(false);
 
   return (
     <MainContext.Provider value={{
@@ -16,6 +17,8 @@ const MainProvider = (props) => {
       setUser,
       isEditProfile,
       setIsEditProfile,
+      update,
+      setUpdate,
     }}>
       {props.children}
     </MainContext.Provider>

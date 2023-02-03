@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Constant} from '../utilities';
 
 const baseUrl = 'https://media.mw.metropolia.fi/wbma/';
 
@@ -8,7 +9,7 @@ const logInPath = 'login/';
 const usersPath = 'users/';
 const tagPath = 'tags/';
 
-const useMedia = () => {
+const useMedia = (update) => {
 
   const [mediaArray, setMediaArray] = useState([]);
 
@@ -33,9 +34,31 @@ const useMedia = () => {
     loadMedia().then(media => {
       setMediaArray(media);
     });
-  }, []);
+  }, [update]);
 
-  return {mediaArray};
+  const postMedia = async (formData) => {
+
+    const userToken = await AsyncStorage.getItem('userToken');
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data',
+        'x-access-token': userToken,
+      },
+      body: formData,
+    };
+
+    try {
+      return await fetch(baseUrl + mediaPath, options).
+        then(response => response.json());
+    } catch (error) {
+      console.log('postMedia' + error.message);
+    }
+  };
+
+  return {mediaArray, postMedia};
 };
 
 const useLogin = () => {
@@ -153,4 +176,54 @@ const useUser = () => {
   return {getUserByToken, postUser, getUserAvatar, checkUsername, updateUser};
 };
 
-export {useMedia, useLogin, useUser};
+const useTag = (update) => {
+
+  const [mediaArray, setMediaArray] = useState([]);
+
+  const getAppFiles = async () => {
+
+    try {
+      return await fetch(baseUrl + tagPath + Constant.APP_ID).
+        then(response => response.json().then(async result => {
+            return await Promise.all(result.map(async (item, index) => {
+              return await fetch(baseUrl + mediaPath + item.file_id).
+                then(mediaResponse => mediaResponse.json());
+            }));
+          },
+          error => console.log(error.message),
+        ));
+    } catch (e) {
+      console.log('Error loading tagged media', e);
+    }
+  };
+
+  useEffect(() => {
+    getAppFiles().then(media => {
+      setMediaArray(media);
+    });
+  }, [update]);
+
+  const postTag = async (data) => {
+
+    const token = await AsyncStorage.getItem('userToken');
+
+    const options = {
+      method: 'post',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    try {
+      return await fetch(baseUrl + tagPath, options).
+        then(tagResponse => tagResponse.json());
+      ;
+    } catch (error) {
+      throw new Error('postTag: ' + error.message);
+    }
+  };
+  return {mediaArray, getAppFiles, postTag};
+};
+
+export {useMedia, useLogin, useUser, useTag};

@@ -2,14 +2,15 @@ import React, {useContext} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {MainContext} from '../contexts/MainContext';
+import MaterialCommunityIcons
+  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Home from '../views/Home';
 import Login from '../views/Login';
 import Single from '../views/Single';
 import Profile from '../views/Profile';
-import {MainContext} from '../contexts/MainContext';
-import MaterialCommunityIcons
-  from 'react-native-vector-icons/MaterialCommunityIcons';
+import Upload from '../views/Upload';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -26,6 +27,15 @@ const TabScreen = () => {
         }}
         name="Home"
         component={Home}/>
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'Upload',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="upload" color={color} size={26}/>
+          ),
+        }}
+        name="Upload"
+        component={Upload}/>
       <Tab.Screen
         options={{
           tabBarLabel: 'Profile',

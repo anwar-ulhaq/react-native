@@ -1,11 +1,17 @@
+import {useContext} from 'react';
 import {FlatList} from 'react-native';
-import ListItem from './ListItem';
-import {useMedia} from '../hooks/ApiHooks';
 import {PropTypes} from 'prop-types';
+
+import ListItem from './ListItem';
+import {useTag} from '../hooks/ApiHooks';
+import {MainContext} from '../contexts/MainContext';
 
 const List = (props) => {
 
-  const {mediaArray} = useMedia();
+  const {update} = useContext(MainContext);
+
+  //const {mediaArray} = useMedia(update);
+  const {mediaArray} = useTag(update);
 
   return (
     <FlatList
