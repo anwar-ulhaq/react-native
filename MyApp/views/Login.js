@@ -65,7 +65,7 @@ const Login = ({navigation}) => {
         <View>
           {toggleForm ? <LoginForm/> : <RegisterForm/>}
 
-          <Card>
+          <Card containerStyle={{borderRadius: 8}}>
             <Text>
               {toggleForm
                 ? 'No account yet? Please register.'
