@@ -2,7 +2,7 @@ import {PropTypes} from 'prop-types';
 import React from 'react';
 import {Avatar, Button, ListItem as RNEListItem} from '@rneui/themed';
 
-const ListItem = (props) => {
+const ListItem = ({singleMedia, navigation}) => {
 
   return (
 
@@ -10,16 +10,16 @@ const ListItem = (props) => {
       <Avatar
         rounded
         size="large"
-        source={props.singleMedia.thumbnails !== undefined ? {
+        source={singleMedia?.thumbnails !== undefined ? {
           uri: 'https://media.mw.metropolia.fi/wbma/uploads/' +
-            props.singleMedia.thumbnails.w160,
+            singleMedia.thumbnails.w160,
         } : undefined}
         activeOpacity={0.7}
       />
       <RNEListItem.Content>
-        <RNEListItem.Title>{props.singleMedia.title}</RNEListItem.Title>
+        <RNEListItem.Title>{singleMedia?.title}</RNEListItem.Title>
         <RNEListItem.Subtitle numberOfLines={3}>
-          {props.singleMedia.description}
+          {singleMedia?.description}
         </RNEListItem.Subtitle>
       </RNEListItem.Content>
       <Button
@@ -36,11 +36,7 @@ const ListItem = (props) => {
           color: 'white',
         }}
         onPress={() => {
-          props.navigation.navigate('Single', {
-            title: props.singleMedia.title,
-            filename: props.singleMedia.filename,
-            description: props.singleMedia.description,
-          });
+          navigation.navigate('Single', singleMedia);
         }}
       />
     </RNEListItem>);

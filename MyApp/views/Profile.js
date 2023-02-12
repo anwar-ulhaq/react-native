@@ -291,6 +291,13 @@ const Profile = ({navigation}) => {
             user.full_name :
             'Not available'}</ListItem.Title>
         </ListItem>
+        <Button
+          containerStyle={{marginBottom: 8}}
+          title="My Files"
+          onPress={() => {
+            navigation.navigate('MyFiles');
+          }}
+        />
         <Button title={'Logout'} onPress={logout}/>
       </Card>
   );
